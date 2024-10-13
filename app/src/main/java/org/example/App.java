@@ -50,6 +50,43 @@ public class App {
      * a un vector y luego calcule su media, cuántas temperaturas están por encima
      * de la media y cuántas por debajo.
      */
+    public static void calcularTemperaturas() {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("¿Cuántas temperaturas deseas generar? ");
+            int n = scanner.nextInt();
+            double[] temperaturas = new double[n];
+            Random random = new Random();
+
+            // Generar temperaturas aleatorias
+            for (int i = 0; i < n; i++) {
+                temperaturas[i] = random.nextDouble() * 40; // Temperaturas entre 0 y 40 grados
+            }
+
+            // Calcular media
+            double suma = 0;
+            for (double temp : temperaturas) {
+                suma += temp;
+            }
+            double media = suma / n;
+
+            // Contar temperaturas por encima y por debajo de la media
+            int encimaMedia = 0, debajoMedia = 0;
+            for (double temp : temperaturas) {
+                if (temp > media) encimaMedia++;
+                else if (temp < media) debajoMedia++;
+            }
+
+            // Imprimir resultados
+            System.out.println("Temperaturas generadas: " + Arrays.toString(temperaturas));
+            System.out.println("Media: " + media);
+            System.out.println("Temperaturas por encima de la media: " + encimaMedia);
+            System.out.println("Temperaturas por debajo de la media: " + debajoMedia);
+
+        } catch (Exception e) {
+            System.out.println("Error en calcularTemperaturas: " + e.getMessage());
+        }
+    }
 
     /*
      * 3. Cargue un vector a partir de un archivo de palabras, con mínimo 10
@@ -57,6 +94,21 @@ public class App {
      * 
      * Escriba el vector inicial sin ordenar, los vectores ordenados.
      */
+     public static void cargarPalabras(String nombreArchivo) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
+            palabras = new String[10]; // Se pueden ajustar según el tamaño necesario
+            String linea;
+            int index = 0;
+
+            while ((linea = reader.readLine()) != null && index < palabras.length) {
+                palabras[index++] = linea.trim();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
+        }
+    }
 
     /*
      * 4. Escriba un algoritmo que cree un vector de N elementos (el N es dado por
@@ -73,11 +125,58 @@ public class App {
      * 5. Escriba un algoritmo para convertir un número decimal en un número
      * hexadecimal, apoyado en vectores.
      */
+    public static String convertirDecimalHexadecimal(int decimal) {
+        String hex = "";
+        char[] digitosHex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        
+        try {
+            if (decimal == 0) {
+                return "0"; // Caso base si el número decimal es 0
+            }
+            
+            while (decimal > 0) {
+                int residuo = decimal % 16; // Obtiene el residuo (valor hexadecimal)
+                hex = digitosHex[residuo] + hex; // Añade el carácter correspondiente al inicio de la cadena
+                decimal = decimal / 16; // Reduce el número decimal
+            }
+    
+        } catch (Exception e) {
+            System.out.println("Error al convertir a hexadecimal: " + e.getMessage());
+        }
+        
+        return hex; // Devuelve la cadena con el número hexadecimal
+    }
 
     /*
      * 6. Escriba un algoritmo que solicite al usuario el orden de una matriz
      * cuadrática, implemente su matriz transpuesta (investiga qué es) y la imprima.
      */
+     public static void llenarMatriz(int[][] matriz) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    System.out.print("Ingrese el elemento [" + i + "][" + j + "]: ");
+                    matriz[i][j] = scanner.nextInt();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al ingresar datos: " + e.getMessage());
+        }
+    }
+
+    public static int[][] calcularTranspuesta(int[][] matriz) {
+        int n = matriz.length;
+        int[][] transpuesta = new int[n][n];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                transpuesta[j][i] = matriz[i][j];
+            }
+        }
+        
+        return transpuesta;
+    }
 
     /*
      * 7. Escriba un algoritmo que calcule el producto y la división. Los operandos
@@ -86,6 +185,42 @@ public class App {
      * llenados usando la función random para calcular números aleatorios entre 10 y
      * 100.
      */
+     public static void completarmatriz(int[][] matriz) {
+        Random random = new Random();
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    matriz[i][j] = random.nextInt(91) + 10; 
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al llenar la matriz: " + e.getMessage());
+        }
+    }
+
+    public static int calcularSumaDiagonalPrincipal(int[][] matriz) {
+        int suma = 0;
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                suma += matriz[i][i]; 
+            }
+        } catch (Exception e) {
+            System.out.println("Error al calcular la suma de la diagonal principal: " + e.getMessage());
+        }
+        return suma;
+    }
+
+    public static int calcularSumaDiagonalSecundaria(int[][] matriz) {
+        int suma = 0;
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                suma += matriz[i][matriz.length - 1 - i]; 
+            }
+        } catch (Exception e) {
+            System.out.println("Error al calcular la suma de la diagonal secundaria: " + e.getMessage());
+        }
+        return suma;
+    }
 
     /*
      * 8. Escriba un algoritmo que llene de manera aleatoria una matriz de 100 filas
@@ -93,11 +228,94 @@ public class App {
      * en cada fila. Imprima la matriz antes de llenarla, luego de llenarla y el
      * vector con el resultado.
      */
+    public static void llenarMatriz(char[][] matriz, int[][] conteo) {
+        Random random = new Random();
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    
+                    matriz[i][j] = random.nextBoolean() ? 'X' : 'O';
+                    
+                    if (matriz[i][j] == 'X') {
+                        conteo[i][0]++; 
+                    } else {
+                        conteo[i][1]++; 
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al llenar la matriz: " + e.getMessage());
+        }
+    }
+
 
     /*
      * 9. Llene una matriz de 5x5 con números aleatorios entre 1 y 9. En un vector
      * adicional, calcule la cantidad de números repetidos por cada fila y en otro
      * vector la cantidad de números repetidos de cada columna.
      */
+         public static void Matriz(int[][] matriz) {
+        Random random = new Random();
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz[i].length; j++) {
+                    matriz[i][j] = random.nextInt(9) + 1; 
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al llenar la matriz: " + e.getMessage());
+        }
+    }
+
+    public static int contarRepetidos(int[] fila) {
+        int repetidos = 0;
+        boolean[] contados = new boolean[10]; 
+        try {
+            for (int i = 0; i < fila.length; i++) {
+                if (fila[i] >= 1 && fila[i] <= 9 && !contados[fila[i]]) {
+                    
+                    int count = 0;
+                    for (int j = 0; j < fila.length; j++) {
+                        if (fila[i] == fila[j]) {
+                            count++;
+                        }
+                    }
+                    if (count > 1) {
+                        repetidos += count - 1; 
+                    }
+                    contados[fila[i]] = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al contar repetidos en la fila: " + e.getMessage());
+        }
+        return repetidos;
+    }
+
+    public static int contarRepetidosPorColumna(int[][] matriz, int columna) {
+        int repetidos = 0;
+        boolean[] contados = new boolean[10]; 
+        try {
+            for (int i = 0; i < matriz.length; i++) {
+                int numero = matriz[i][columna];
+                if (numero >= 1 && numero <= 9 && !contados[numero]) {
+               
+                    int count = 0;
+                    for (int j = 0; j < matriz.length; j++) {
+                        if (numero == matriz[j][columna]) {
+                            count++;
+                        }
+                    }
+                    if (count > 1) {
+                        repetidos += count - 1; 
+                    }
+                    contados[numero] = true; 
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al contar repetidos en la columna: " + e.getMessage());
+        }
+        return repetidos;
+    }
 
 }
