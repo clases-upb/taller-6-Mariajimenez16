@@ -5,6 +5,7 @@ package org.example;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.io.BufferedReader;
 
 public class App {
     static int[] numeros;
@@ -12,7 +13,14 @@ public class App {
     static String [] palabras;
 
     public static void main(String[] args) {
+        
         try {
+             // Inicializar vectores
+        numeros = new int[10]; 
+        cadenas = new String[10]; 
+        palabras = new String[10]; 
+        
+        int opcion;
             switch (opcion) {
                 case 1:
                     pruebaVectores();
@@ -34,7 +42,7 @@ public class App {
             }
 
         } catch (Exception e) {
-            System.out.println("ocurrio un error \n" + e.toString);
+            System.out.println("ocurrio un error \n" + e.toString());
         }
     }
 
