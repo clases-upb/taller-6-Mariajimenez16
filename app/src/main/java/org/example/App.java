@@ -34,7 +34,7 @@ public class App {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("ocurrio un error \n" + e.toString);
         }
     }
 
