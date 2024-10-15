@@ -13,6 +13,25 @@ public class App {
 
     public static void main(String[] args) {
         try {
+            switch (opcion) {
+                case 1:
+                    pruebaVectores();
+                    break;
+                case 2:
+                    pruebaMatrizTranspuesta();
+                    break;
+                case 3:
+                    pruebaProductoDivisionDiagonales();
+                    break;
+                case 4:
+                    pruebaLlenarMatrizXsOs();
+                    break;
+                case 5:
+                    pruebaContarRepetidosMatriz();
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
 
         } catch (Exception e) {
             // TODO: handle exception
